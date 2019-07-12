@@ -1,0 +1,134 @@
+# iterable
+
+interval = range(0, 5)
+
+interval_iter = iter(interval)
+
+print(interval_iter)
+
+next(interval_iter)
+
+next(interval_iter)
+
+# can be used to find patterns
+# and can apply next f()
+
+def retrieve_character_indices(string):
+    character_indices = dict()
+    # Define the 'for' loop
+    for index, character in enumerate(string):
+        # Update the dictionary if the key already exists
+        if character in character_indices:
+            character_indices[character].append(index)
+        # Update the dictionary if the key is absent
+        else:
+            character_indices[character] = [index]
+            
+    return character_indices
+  
+print(retrieve_character_indices('enumerate an Iterable'))
+
+
+
+# traverse through columns of a dataframe
+# .iteritems
+#for columns_name, series in heroes.iteritems():
+
+	#column_counts = dict()
+
+# #Traverse through the columns in the heroes DataFrame
+#for column_name, series in heroes.iteritems():
+    # #Retrieve the values stored in series in a list form
+    #values = list(series)
+    #category_counts = dict()  
+    # #Traverse through unique categories in values
+    #for category in set(values):
+        # #Count the appearance of category in values
+        #category_counts[category] = values.count(category)
+    
+    #column_counts[column_name] = category_counts
+    
+#print(column_counts)
+
+#list comprehension
+# iterate and modify list
+list_a = [2,5,3,2,1,21,3,43,4,2]
+list_b = [(2 * num) for num in list_a]
+print(list_b)
+
+news_new= [num for num in range(1, 10)]
+print(news_new)
+
+# only even nums
+news_even= [num for num in range(1, 10) if num % 2==0]
+print(news_even)
+
+text = 'list COMPREHENSION is A way TO create LISTS'
+
+text_new = list(text.split(' '))
+# len(word) is output element 
+text_new = [len(word) for word in text_new if word.islower()]
+print(text_new)
+
+#iterate through multiple loops
+loop_1 = ['a','b','c']
+loop_2 = [1,2,3]
+
+pairs = [(letter, num) for letter in loop_1 for num in loop_2]
+print(pairs)
+
+# same results
+pairs1 = []
+for i in loop_2:
+	for j in loop_1:
+		pairs1.append((i,j))
+print(pairs1)
+
+
+#add [ ]
+pairs = [[(l, n) for l in loop_1] for n in loop_2]
+print(pairs)
+
+# same as 
+
+pairs1 = []
+for i in loop_2:
+	temp = []
+	for j in loop_1:
+		temp.append((i,j))
+	pairs1.append(temp)
+print(pairs1)
+
+
+# example bag of words
+# Convert the text to lower case and create a word list
+
+words = 'Yo man, Python'
+words = list(words.lower())
+
+# Create a set storing only unique words
+word_set = set(words) # set is good for counting words
+
+# Create a dictionary that counts each word in the list
+tuples = [(word, words.count(word)) for word in word_set]  # return word and # of words counted 
+word_counter = dict(tuples)
+
+# Printing words that appear more than once
+for (key, value) in word_counter.items():  # add .items to iterate over
+    if value > 1:
+        print("{}: {}".format(key, value))
+
+
+# number is not prime
+cands = [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49]
+
+numbers = [1, 4,5, 8]
+def is_prime(n):
+	if num < 2:
+		return False
+	if num in range(2, int(i**.5)+1):
+		if num / i == 0:
+			return False
+		return True
+	
+print(int(11**.5))
