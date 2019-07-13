@@ -1,0 +1,109 @@
+#example using return
+#can not iterate over result
+def fun_return(u):
+	result1 = []
+	for i in range(0, u):
+		result1.append(2*i)
+	print(result1)
+
+print(fun_return(5))
+
+
+
+#Generator function
+
+#a special iterable object created by a function having a yield keyword instead of return.
+# return statement terminates a function entirely, yield statement pauses the function saving all its states and later continues from there on successive calls.
+# good for memory, doesnot hold all values in memory 
+# Faster performance time
+
+#def func():
+	#yield a value from super complex calculations
+	#yield 0
+	# a generator object will be returned, not a value.  
+	# a generator is an iterable and can be used in a for loop
+	# can only loop through it once
+
+#Example generator 
+def func(n):
+	for i in range(0, n):
+		yield 2*i
+
+result = func(3)  
+for item in result: # print out generator results with for loop 
+	print(item)
+
+#or can use next()
+fun5 = func(5)
+print(next(fun5))
+print(next(fun5))
+print(next(fun5))
+print(next(fun5))
+print(next(fun5))
+#print(next(fun5)) # will return stop iteration, on 6th
+
+#generator comprehension  uses ()
+#dont need to do def func()
+result = (2*i for i in range (4,9))
+for item in result:
+	print(item)
+
+result = (3*i for i in range (11, 13))
+print(list(result))  # print as a list, however will no save memory
+	
+
+
+
+import random
+def simulate_dice_throws():
+    total, out = 0, dict([(i, [0, 0]) for i in range(1, 7)])
+    while True:
+        # Simulate a single toss to get a new number
+        num = random.randint(1, 6)
+        total += 1
+        # Update the number and the ratio of realizations
+        out[num][0] = out[num][0] + 1
+        out[num][1] = round(out[num][0]/total, 2)
+        # Yield the updated dictionary
+        yield out
+
+# Create the generator and simulate 1000 tosses
+dice_simulator = simulate_dice_throws()
+for i in range(1, 1001):
+    print(str(i) + ': ' + str(next(dice_simulator)))
+
+
+# rewrite function in using generators
+#1
+def func1(n):
+  for i in range(0, n):
+    yield i**2
+
+gen = (i**2 for i in range(0, 10))
+
+#return func1 and gen together, to show values side by side
+for item in zip(gen, func1(10)):
+	print(item)
+
+#2
+def func2(n):
+  for i in range(0, n):
+     if i%2 == 0:
+       yield 2*i
+
+gen2 = (2*i for i in range(0, 5) if i%2 ==0)
+
+for item in zip(gen, func2(5)):
+	print(item)
+
+
+#3       
+def func3(n, m):
+  for i in func1(n):
+    for j in func2(m):
+      yield ((i, j), i + j)
+
+gen = (((i**2, 2*j), i**2 + 2*j) for i in range(0, 8) for j in range(0, 10) if j%2 == 0)
+
+for item in zip(gen, func3(8, 10)):
+	print(item)
