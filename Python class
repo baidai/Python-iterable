@@ -1,0 +1,89 @@
+#Python class
+# create python class
+# Can logically group data and function -can build upon and reuse
+
+# Create a blueprint of an employee, so when employees are added, dont need to recreate.
+
+class Employee:
+	pass  # to leave a class or f() empty without generating an error
+
+	#each employee created will be an instance of the class
+
+emp1 = Employee()
+emp2 = Employee()
+
+print(emp1)
+print(emp2)
+
+#instance variables contain data unique to each instance
+emp1.first = 'Mary'
+emp1.last = 'Sleepy'
+emp1.email = 'sleepymary@mymail.com'
+emp1.pay = 20000
+
+emp2.first = 'Majan'
+emp2.last = 'Rest'
+emp2.email = 'sleepymarjan@mymail.com'
+emp2.pay = 70000
+
+print(emp1.email)
+print(emp2.email)
+
+
+# to get benefit of using classes we create an init method
+
+class Employee1:
+	
+	#create a method
+	#so employee info will be created automatically
+	def __init__(self, first, last, pay):
+		self.first = first
+		self.last = last
+		self.email = first + '.' + last + '@company.com'
+
+emp3 = Employee1('Marjan', 'Moraffi', '90000')
+
+print(emp3.email)
+
+# print different info of employee
+print('{} {}'.format(emp3.last, emp3.first)) 
+#instead of printing out, we could me a method
+
+import pandas as pd
+
+class Employee2:
+	
+	#create a method
+	#so employee info will be created automatically
+	# first arguement will be self - will take instance
+	def __init__(self, first, last, pay):
+		self.first = first
+		self.last = last
+		self.email = first + '.' + last + '@company.com'
+		self.pay = pay
+		self.dailypay = pay/365
+
+	#create method for printing full name
+	#each method in class, takes instance as first arguement (self)
+	def fullname(self):
+		return '{} {}'.format(self.last, self.first)
+
+	#method for salary breakdown
+	def salarybreakdown(self):
+		months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		days_per_month = [31, 29, 31, 30, 30, 30, 31, 30, 31, 31, 30, 31]
+		pay_per_month = [round(amt * self.dailypay,2) for amt in days_per_month]
+		tax_per_month = [round(pay * .19) for pay in pay_per_month]
+		columns = ['Month', 'Salary', 'Tax']
+		mon_salary = zip(columns, [months, pay_per_month, tax_per_month])
+		df_monthly = pd.DataFrame(dict(mon_salary))
+		return(df_monthly)
+
+emp4 = Employee2('Marjan', 'Moraffi', 90000)
+emp5 = Employee2('Nelson','Billy', 46000)
+print(emp4.fullname())
+# or can run
+Employee2.fullname(emp4)
+
+print(emp4.salarybreakdown())
+print(emp5.salarybreakdown())
