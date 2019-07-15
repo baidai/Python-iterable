@@ -1,0 +1,122 @@
+#Variables of arguements 
+
+# positional arguements - 
+	# ex: def fn(a, b, c) # a,b,c are positional arguements and must be defined.
+#Keyword arguements
+	# ex: def fn(a,b,c, d=2) # d=2 is a keyword arguement and does not need to be defined.
+			# if d is not defined, it will use default value of 2. Or could define d as  another value d=4
+
+
+#**kwargs in function definitions in python is used to pass a keyworded, variable-length argument list.
+#double star allows us to pass through keyword arguments 
+#https://www.geeksforgeeks.org/args-kwargs-python/
+
+
+# *args , *values .....
+# used to pass a variable number of arguments to a function. It is used to pass a non-keyworded, variable-length argument list.
+#Using the *, the variable that we associate with the * becomes an iterable meaning you can do things like iterate over it, run some higher order functions such as map and filter, etc.
+#ex
+
+def multi_fun(*args):
+	value = 2   # start value at 2
+	for arg in args:
+		value = value * arg
+	print(value)
+
+multi_fun(1, 2, 3, 4)
+
+# other uses of astrik * with variables
+nums = (5, 6, 7)
+multi_fun(*nums) #* will unwrap values in nums
+
+# can also be added to other numbers or variables
+multi_fun(*nums, 4)
+
+
+#keyword arguements
+
+def my_fun(x=1, y=4):
+	print(str(x) + ':' +str(y))
+
+my_fun() #return default values 
+
+# but could include other values
+my_fun( 5, 6)
+
+# **  double astrik - output a dictionary
+def fun_kwargs(**kwargs):
+	print(kwargs)
+
+fun_kwargs(first= 'Sara', last= 'Beasley', age = 43)
+
+
+# or ** can unwrap key value pairs
+	#create a function with defined keys
+def spice_chicks(Kate = 1 , Julie = 1, Jill= 1):
+	print('Kate =' + str(Kate))
+	print('Julie =' + str(Julie))
+	print('Jill =' + str(Jill))
+
+#must pass same keys 
+ages = {'Kate': 30 , 'Julie': 27, 'Jill': 41} 
+spice_chicks(**ages) #**unwarp key value pairs 
+
+
+# Define the function with an arbitrary number of arguments
+def sort_types(*args):
+    nums, strings = [], []    
+    for arg in args:
+        # Check if 'arg' is a number and add it to 'nums'
+        if isinstance(arg, float) == True:
+            nums.append(arg)
+        # Check if 'arg' is a string and add it to 'strings'
+        elif isinstance(arg, str) == True:
+            strings.append(arg)
+    return (nums, strings)
+            
+print(sort_types(1.57, 'car', 'hat', 4, 5, 'tree', 0.89))
+
+# isinstance(element, type), returns T or F, f() to check object type
+print(isinstance(1.57, int))
+
+
+# Define the function with an arbitrary number of arguments, key-word values use **, return a dictionary
+def key_types(**kwargs):
+    dict_type = dict()
+    # Iterate over key value pairs
+    for key, value in kwargs.items():
+        # Update a list associated with a key
+        if type(key) in dict_type:  #type will return <class 'str'>
+            dict_type[key].append(type(value))
+        else:
+            dict_type[key] = value
+            
+    return dict_type
+
+#key =a, value = 1 
+res = key_types(a=1, b=2, c=(1, 2), d=3.1, e=4.2)
+print(res)
+
+#type()
+print(type('a'))
+print(type(1))
+
+
+
+#f() will take both non-keyword and keyword arguements.
+# Define the arguments passed to the function
+def sort_all_types(*args, **kwargs):
+
+    # Find all the numbers and strings in the 1st argument
+    nums1, strings1 = sort_types(*args)
+    
+    # Find all the numbers and strings in the 2nd argument
+    nums2, strings2 = sort_types(*kwargs.values())  # we only want values, not keys
+    
+    return (nums1 + nums2, strings1 + strings2)
+
+
+res = sort_all_types(
+	1, 2.0, 'dog', 5.1, num1 = 0.0, num2 = 5, str1 = 'cat'
+)
+print(res)
