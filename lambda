@@ -1,0 +1,120 @@
+#lambda
+
+#simple tasks in f() 
+#use as small callbacks
+
+#lambda f() can be asigned to a varible, normal def must have a name
+# dont need to specify return
+
+#or can do lambda f() without variable 
+
+#f() that represent arguments to other f() are called callbacks
+
+#lambda, can be used to replace simple callback f(), within a f()
+# example: fun_ex(2, lambda X: x**2)
+
+# one line f()
+odd_even = lambda x: 'even' if x % 2==0 else 'odd'
+
+print(odd_even(3))
+print(odd_even(4))
+
+
+
+# Take x and return x squared if x > 0 and 0, otherwise
+squared_no_negatives = lambda x: x**2 if x > 0 else x == 0
+print(squared_no_negatives(2.0))
+print(squared_no_negatives(-1))
+
+
+# take even numbers out of a list of numbers
+get_even = lambda nums: [n for n in nums if n % 2 == 0] # list comprehension
+# nums is the list of numbers that will be passed
+print(get_even([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+
+# Take strings s1, s2 and list their common characters
+common_chars = lambda s1, s2:[x for x in list(s1) for y in list(s2) if x==y]
+print(common_chars('pasta', 'pizza'))
+
+
+
+# Returns a dictionary counting charaters in a string
+def func2(s):
+    d = dict()
+    for c in set(s):
+        d[c] = s.count(c)
+
+    return d
+print(func2('MyData'))
+#print(lambda2('BooData'))
+
+
+# Convert func2() to a lambda expression
+s = 'MyOwnData'
+# list comprehension is inside dictionary
+lambda2 = lambda s: dict([(c, s.count(c)) for c in set(s)])
+
+import math
+
+# Returns a squared root of a sum of squared numbers
+def func3(*nums):
+    squared_nums = [n**2 for n in nums]
+    sum_squared_nums = sum(squared_nums)
+
+    return math.sqrt(sum_squared_nums)
+
+# Convert func3() to a lambda expression
+lambda3 = lambda *nums: math.sqrt(sum([n**2 for n in nums]))
+print(str(func3(3, 4)) + ', ' + str(lambda3(3, 4)))
+print(str(func3(3, 4, 5)) + ', ' + str(lambda3(3, 4, 5)))
+
+
+# .sort() sorts number increasing, sorts alphabetically, method .sort(key= function), key defines mapping of each item
+
+
+words = ['car', 'bag', 'job', 'time', 'cell', 'call', 'area', 'item', 'unit', 'truck', 'phone', 'shape', 'plane', 'leader', 'height', 'tequila', 'chicken', 'country', 'service', 'creature', 'interview', 'advantage', 'government', 'atmosphere', 'transaction']
+
+# Sort words by the string length
+words.sort(key=lambda s: len(s))
+print(words)
+
+# Sort words by the last character in a string
+words.sort(key=lambda c: c[-1])
+print(words)
+
+# Sort words by the total amount of certain characters
+words.sort(key=lambda c: c.count(c))
+print(words)
+
+
+# map(), filter(), reduce()
+# use a lambda fuction and an iterable
+# map() fuction, and can take many iterable items
+# map() returns and iterable, and it is also an iterator (can use next()) 
+
+#filter() 
+#makes boolan values T or F, and keeps T values
+# returns iterable object, can be used in for loop
+
+# Filter out all the numbers in nums divisible by 3 or 5
+nums = [1,2,3,4,5,6,7,8,9,10,15]
+print(nums)
+fnums = filter(lambda x: x % 3 != 0 and x % 5 != 0, nums)  # lambda f(), nums
+print(list(fnums))
+
+# Return the string without its vowels
+print(string)
+vowels = 'AEIOUaeiou'
+fstring = filter(lambda x: x not in vowels, string)
+print(''.join(fstring))
+
+# Filter all the spells in spells with more than two 'a's
+print(spells)
+fspells = filter(lambda x: x.count('a') > 2, spells)
+print(list(fspells))
+
+
+#reduce() 
+#takes functiona and an iterable
+#iterates over items applying function 
+#summaries an iterable into a new object
