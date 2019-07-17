@@ -1,0 +1,102 @@
+#Recursion
+#process of defining a problem in terms of itself
+#Recursion is a process in which a calls itself as a subroutine
+# Consists of 2 parts
+	#a recursive call to a smaller problem
+	#a base case that prevents an infinite calling
+
+def getFactorial(n):
+	if n< 2: 
+		return 1
+	#elif return (n * getFactorial(n-1))
+#no calculations are done until reach base, then calculates back up.
+#requires a lot of memory
+
+# very good for tree traversals and binary code 
+#ex. Decision Tree
+
+#check if there is a split
+#if node.hasSplitting:
+	##Check which child node to take
+	#if node.goToLeftChild(x):
+		#return pred(node.leftChild, x)
+	#if node.goToRightChild(x):
+		#return pred(node.RightChild, x)
+## need base case, if node has not child, it will have a category
+	#return node.category
+
+
+def fib(n):
+
+  if n < 2:
+    return (n, 1)
+
+  fib1 = fib(n-1)
+  #print(fib1)
+  fib2 = fib(n-2)
+  #print(fib2)
+
+
+  return (fib1[0] + fib2[0], fib1[1] + fib2[1] + 1)
+
+print(fib(20))
+
+
+
+# Calculate an average value of the sequence of numbers
+def average(nums):
+  
+    # Base case
+    if len(nums) == 1:  
+        return 1
+    
+    # Recursive call
+    n = len(nums)
+    return sum(nums)/n
+
+# Testing the function
+print(average([1, 2, 3, 4, 5]))
+
+
+
+#Approximate Pi with recursion
+#The number π can be computed by the following formula:
+#π=4∑k=0∞(−1)k2k+1=4(11−13+15−17+19−...)
+#Your task is to write a recursive function to approximate π using the formula defined above (the # Write an expression to get the k-th element of the series 
+get_elmnt = lambda k: ((-1)**k)/(2*k+1)
+
+def calc_pi(n):
+    curr_elmnt = get_elmnt(n)
+    
+    # Define the base case
+    if get_elmnt(n) == 1:
+    	return 1 
+      
+    # Make the recursive call
+    return get_elmnt(n)  # run get_elment(5) - returns get_elment(4)...get_elmnt(1) will return 1 (wont return f() get_elment().
+
+# Compare the approximated Pi value to the theoretical one
+#print("approx = {}, theor = {}".format(calc_pi(500), math.pi))
+#approximation means that instead of infinity ∞, the sequence considers only a certain amount of elements n).
+
+# Write an expression to get the k-th element of the series, without taking into account 4.
+
+get_elmnt = lambda k: (((-1)**k)/(2*k+1))
+#-1 to the k, must put in ()
+
+import math
+# Write an expression to get the k-th element of the series 
+get_elmnt = lambda k: ((-1)**k)/(2*k+1)
+
+def calc_pi(n):
+    curr_elmnt = get_elmnt(n)
+    
+    # Define the base case
+    if get_elmnt(n) == 1:
+    	return 1 
+      
+    # Make the recursive call
+    return get_elmnt(n-1)
+  
+# Compare the approximated Pi value to the theoretical one
+print("approx = {}, theor = {}".format(calc_pi(500), math.pi))

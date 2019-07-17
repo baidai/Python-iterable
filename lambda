@@ -103,18 +103,47 @@ fnums = filter(lambda x: x % 3 != 0 and x % 5 != 0, nums)  # lambda f(), nums
 print(list(fnums))
 
 # Return the string without its vowels
-print(string)
+string= 'bigpimpin'
 vowels = 'AEIOUaeiou'
 fstring = filter(lambda x: x not in vowels, string)
 print(''.join(fstring))
 
 # Filter all the spells in spells with more than two 'a's
-print(spells)
-fspells = filter(lambda x: x.count('a') > 2, spells)
-print(list(fspells))
+#print(spells)
+#fspells = filter(lambda x: x.count('a') > 2, spells)
+#print(list(fspells))
 
 
 #reduce() 
-#takes functiona and an iterable
+#takes function and an iterable
 #iterates over items applying function 
 #summaries an iterable into a new object
+
+# reduce must take two arguments.
+# example error
+#In this case, the function is your lambda, which you have defined as: "lambda string: ....". But a lambda #used for reduce would need to take two arguments, something like this: "lambda s1, s2:".
+
+st = 'Datacamp'
+print(reversed(st))
+print(next(reversed(st)))
+
+print(list(st))
+
+
+from functools import reduce
+
+# Find common items shared among all the lists in lists
+lists = [[1, 4, 8, 9], [2, 4, 6, 9, 10, 1], [9, 0, 1, 2, 4]]
+common_items = reduce((lambda x, y: set(x) & set(y)), lists)
+print('common items = ' + str(common_items))
+
+#set creates and unordered set of items
+my_set = set([1,2,3,2])
+print(my_set)
+
+
+# Convert a number sequence into a single number
+nums = [5, 6, 0, 1]
+num = reduce(lambda x, y: 10*x + y, nums)
+# 10*5 = 50 + 6= 56, 10*56 = 560 + 0 ......
+print(str(nums) + ' is converted to ' + str(num))
