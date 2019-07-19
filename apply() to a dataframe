@@ -1,0 +1,103 @@
+#apply() to a dataframe
+
+# df.apply(function)  # function is applied to each column of the dataframe
+
+# however sometimes returns a df, where function is applied to each element and sometimes returns a series
+
+#sq.rt will return df
+#mean will return series, summarizing columns
+
+# can use lambda expressions
+# new = scores.apply(lambda x: x/2)
+
+# axis = 0 - f() applied over columns
+# axis = 1  - f() applied over rows
+# df.apply(fun, axis= )
+
+# result_type = "expand"  #creates dataframe of results instead of series 
+#new = old.apply(fun, result_type = 'expand', axis = 1)
+
+
+# apply arguments in args
+# if function requires arguements 
+#df.apply(fun, args= )
+# set to false, creates inverted result
+#df.apply(fun, args=[67, 75], inside = False)
+
+
+#Pandas Series is a one-dimensional labeled array capable of holding data of any type (integer, string, float, python objects, etc.). The axis labels are collectively called index. Pandas Series is nothing but a column in an excel sheet
+
+
+import pandas as pd
+#create a df
+d = {'apples':['red','yellow', 'red', 'brown', 'green', 'yellow', 'yellow'],  'pears': ['red', 'red', 'yellow', 'white', 'brown', 'brown', 'brown']}
+
+fruits = pd.DataFrame(data=d)
+#print(fruits['apples'])
+
+from functools import reduce
+
+def most(series):
+	vals =list(series)  #create a list from columns
+	#print(vals)
+	# Create a tuple list with unique items and their counts
+	tup = [(x, vals.count(x)) for x in set(series)]
+	print(tup)
+	# Extract a tuple with the highest counts using reduce()
+	# x[1] = valu.count(x) of tuple
+	result = reduce(lambda x, y: x if x[1] > y[1] else y, tup) 
+	# return x value of tuple
+	return result[0] 
+
+# Apply the most function on the scores DataFrame
+cat = ['apples','pears']
+highest= fruits[cat].apply(most)
+print(highest)
+
+#create a df
+import pandas as pd
+d = {'math score': [90, 59, 98, 76, 78, 88, 97] , 'reading score': [99, 49, 69, 78, 98, 78, 85], 'writing score':[89,78, 89, 90, 99, 89, 96]}
+
+scores = pd.DataFrame(data = d)
+
+
+# create a function to take mean of df columns and rank them
+import numpy as np
+def rank(series):
+    # Calculate the mean of the input series
+    mean = np.mean(series)
+    # Return the mean and its rank as a list
+    if mean > 90:
+        return [mean, 'high']
+    if mean > 60:
+        return [mean, 'medium']
+    return [mean, 'low']
+
+
+# Insert the output of rank() into new columns of scores
+# will make its own seperate df
+cols = ['math score', 'reading score', 'writing score']  #makd columns
+# make rows scores, put together and apply funcation rank, axis 1 = rows, expand will make df
+scores[['mean', 'rank']] = scores[cols].apply(rank, axis=1,
+                                              result_type='expand')
+print(scores[['mean', 'rank']].head())
+
+
+
+# rescale data 
+#create a df
+import pandas as pd
+d = {'math score': [90, 59, 98, 76, 78, 88, 97] , 'reading score': [99, 49, 69, 78, 98, 78, 85], 'writing score':[89,78, 89, 90, 99, 89, 96]}
+
+scores = pd.DataFrame(data = d)
+
+# data to be scaled linearly between 1 to 10
+
+def rescale(series, low, high):
+   # Define the expression to rescale input series
+   return series * (high - low)/100 + low #mulp each number in series by formula
+
+# Rescale the data in cols to lie between 1 and 10
+cols = ['math score', 'reading score', 'writing score'] 
+scores[cols] = scores[cols].apply(rescale, args=[1, 10])  #args low, high
+print(scores[cols].head())
